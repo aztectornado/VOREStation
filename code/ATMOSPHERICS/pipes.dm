@@ -17,6 +17,12 @@
 	buckle_require_restraints = 1
 	buckle_lying = -1
 
+
+/** Return a list of the pipe's nodes, with associated values being the dir that node is facing. */
+/obj/machinery/atmospherics/pipe/proc/GetNodeFacings()
+	// TODO - Automated detection? Can't do that yet, must wait until nodes is an array.
+	return list()
+
 /obj/machinery/atmospherics/pipe/drain_power()
 	return -1
 
