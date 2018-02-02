@@ -99,9 +99,11 @@
 #include "beach/beach.dmm"
 #include "beach/cave.dmm"
 #include "alienship/alienship.dmm"
+//#include "aerostat/aerostat.dmm"
+//#include "aerostat/surface.dmm"
 #endif
 
-#include "beach/beach.dm"
+#include "beach/_beach.dm"
 /datum/map_template/tether_lateload/away_beach
 	name = "Desert Planet - Z1 Beach"
 	desc = "The beach away mission."
@@ -120,7 +122,7 @@
 /datum/map_z_level/tether_lateload/away_beach_cave
 	name = "Away Mission - Desert Cave"
 
-#include "alienship/alienship.dm"
+#include "alienship/_alienship.dm"
 /datum/map_template/tether_lateload/away_alienship
 	name = "Alien Ship - Z1 Ship"
 	desc = "The alien ship away mission."
@@ -129,3 +131,24 @@
 
 /datum/map_z_level/tether_lateload/away_alienship
 	name = "Away Mission - Alien Ship"
+
+/*
+#include "aerostat/_aerostat.dm"
+/datum/map_template/tether_lateload/away_aerostat
+	name = "Remmi Autostat - Z1 Aerostat"
+	desc = "The Virgo 2 Aerostat away mission."
+	mappath = 'aerostat/aerostat.dmm'
+	associated_map_datum = /datum/map_z_level/tether_lateload/away_aerostat
+
+/datum/map_z_level/tether_lateload/away_aerostat
+	name = "Away Mission - Aerostat"
+
+/datum/map_template/tether_lateload/away_aerostat_surface
+	name = "Remmi Autostat - Z2 Virgo 2 Surface"
+	desc = "The surface from the Virgo 2 Aerostat."
+	mappath = 'aerostat/surface.dmm'
+	associated_map_datum = /datum/map_z_level/tether_lateload/away_aerostat_surface
+
+/datum/map_z_level/tether_lateload/away_aerostat_surface
+	name = "Away Mission - Aerostat Surface"
+*/
