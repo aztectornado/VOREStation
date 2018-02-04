@@ -132,8 +132,9 @@
 /datum/map_z_level/tether_lateload/away_alienship
 	name = "Away Mission - Alien Ship"
 
-/*
+
 #include "aerostat/_aerostat.dm"
+/*
 /datum/map_template/tether_lateload/away_aerostat
 	name = "Remmi Autostat - Z1 Aerostat"
 	desc = "The Virgo 2 Aerostat away mission."
