@@ -390,6 +390,62 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
+//Begin vorestation edit
+#define COOLANT_LATENT_HEAT 19000 
+/datum/reagent/coolant/touch_turf(var/turf/simulated/T)
+	if(!istype(T))
+		return
+
+	var/datum/gas_mixture/environment = T.return_air()
+	var/min_temperature = T0C //Safe enough for spess
+
+	var/hotspot = (locate(/obj/fire) in T)
+	if(hotspot && !istype(T, /turf/space))
+		var/datum/gas_mixture/lowertemp = T.remove_air(T:air:total_moles)
+		lowertemp.temperature = max(min(lowertemp.temperature-2000, lowertemp.temperature / 2), 0)
+		lowertemp.react()
+		T.assume_air(lowertemp)
+		qdel(hotspot)
+
+	if (environment && environment.temperature > min_temperature) // Sublimation
+		var/removed_heat = between(0, volume * COOLANT_LATENT_HEAT, -environment.get_thermal_energy_change(min_temperature))
+		environment.add_thermal_energy(-removed_heat)
+		if (prob(5))
+			T.visible_message("<span class='warning'>The coolant hisses as it lands on \the [T]!</span>")
+
+	//else if(volume >= 10)
+	//	T.wet_floor(1)
+
+/datum/reagent/coolant/touch_obj(var/obj/O) //Included for simplicity
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
+		if(!cube.wrapped)
+			cube.Expand()
+
+/datum/reagent/coolant/touch_mob(var/mob/living/L, var/amount)
+	if(istype(L))
+/*		// First, kill slimes.
+		if(istype(L, /mob/living/simple_animal/slime))
+			var/mob/living/simple_animal/slime/S = L
+			S.adjustToxLoss(15 * amount)
+			S.visible_message("<span class='warning'>[S]'s flesh hisses where the coolant touches it!</span>", "<span class='danger'>Your flesh burns in the water!</span>")
+*/
+		// Better than water at nuking fire
+		var/needed = L.fire_stacks * 3
+		if(amount > needed)
+			L.ExtinguishMob()
+		L.adjust_fire_stacks(-(amount / 3))
+		remove_self(needed)
+
+/datum/reagent/coolant/affect_touch(var/mob/living/carbon/M, var/alien, var/removed) //Like frost oil, except a higher minimum temperature, and on touch.
+	M.bodytemperature = max(M.bodytemperature - 5 * TEMPERATURE_DAMAGE_COEFFICIENT, 235)
+	if(prob(1))
+		M.emote("shiver")
+	if(istype(M, /mob/living/simple_animal/slime))
+		M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+
+//end vorestation edit
+
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
 	id = "glue"

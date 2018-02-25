@@ -36,12 +36,12 @@
 
 /obj/item/weapon/extinguisher/New()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent("coolant", max_water)
 	..()
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	if(..(user, 0))
-		user << text("\icon[] [] contains [] units of water left!", src, src.name, src.reagents.total_volume)
+		user << text("\icon[] [] contains [] units of coolant left!", src, src.name, src.reagents.total_volume)
 	return
 
 /obj/item/weapon/extinguisher/attack_self(mob/user as mob)
